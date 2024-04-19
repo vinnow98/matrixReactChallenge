@@ -3,8 +3,8 @@ import axios from "axios";
 
 const Details = ({ username }) => {
   let myUserName = username || "vinnow98";
-  const myClientId = "e3bf4d2f266107944b8d";
-  const myClientSecret = "42f7c7f04381fb0ffae4d4febbebcb54987f3256";
+  const myClientId = "e3bf4d2f266107944b8e";
+  const myClientSecret = "42f7c7f04381fb0ffae4d4febbebcb54987f325e";
   const [data, getData] = useState(null);
   const [repos, getRepos] = useState([]);
 
@@ -15,10 +15,11 @@ const Details = ({ username }) => {
       )
       .then((result) => {
         getData(result.data);
-        // Fetch user repositories only if user data is available
         if (result.data) {
           axios
-            .get(`https://api.github.com/users/${myUserName}/repos`)
+            .get(
+              `https://api.github.com/users/${myUserName}/repos?client_id=${myClientId}&client_secret=${myClientSecret}&sort=created`
+            )
             .then((reposResult) => {
               getRepos(reposResult.data);
             })
@@ -31,7 +32,7 @@ const Details = ({ username }) => {
         getData(null);
         console.log(err.message);
       });
-  }, [myUserName, myClientId, myClientSecret]);
+  }, [myUserName]);
 
   return (
     <div className="d-flex flex-column shadow p-4 rounded">

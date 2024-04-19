@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 const Searchbar = ({ onsearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e.target[0].value);
     onsearch(e.target[0].value);
+    e.target[0].value = "";
   };
   return (
     <div>
